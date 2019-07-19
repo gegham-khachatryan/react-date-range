@@ -1,12 +1,5 @@
 import classnames from 'classnames';
-import {
-  addMonths,
-  areIntervalsOverlapping,
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
-} from 'date-fns';
+import { addMonths, areIntervalsOverlapping, startOfMonth, endOfMonth, startOfWeek, endOfWeek, format } from 'date-fns';
 
 export function calcFocusDate(currentFocusedDate, props) {
   const { shownDate, date, months, ranges, focusedRange, displayMode } = props;
@@ -16,12 +9,12 @@ export function calcFocusDate(currentFocusedDate, props) {
     const range = ranges[focusedRange[0]] || {};
     targetInterval = {
       start: range.startDate,
-      end: range.endDate,
+      end: range.endDate
     };
   } else {
     targetInterval = {
       start: date,
-      end: date,
+      end: date
     };
   }
   targetInterval.start = startOfMonth(targetInterval.start || new Date());
@@ -35,7 +28,7 @@ export function calcFocusDate(currentFocusedDate, props) {
   // if (props.scroll.enabled) return targetDate;
   const currentFocusInterval = {
     start: startOfMonth(currentFocusedDate),
-    end: endOfMonth(addMonths(currentFocusedDate, months - 1)),
+    end: endOfMonth(addMonths(currentFocusedDate, months - 1))
   };
   if (areIntervalsOverlapping(targetInterval, currentFocusInterval)) {
     // don't change focused if new selection in view area
@@ -49,7 +42,7 @@ export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
     (range, i) => i > currentRangeIndex && range.autoFocus !== false && !range.disabled
   );
   if (nextIndex !== -1) return nextIndex;
-  return ranges.findIndex(range => range.autoFocus !== false && !range.disabled);
+  return ranges.findIndex((range) => range.autoFocus !== false && !range.disabled);
 }
 
 export function getMonthDisplayRange(date, dateOptions) {
@@ -61,19 +54,59 @@ export function getMonthDisplayRange(date, dateOptions) {
     start: startDateOfCalendar,
     end: endDateOfCalendar,
     startDateOfMonth,
-    endDateOfMonth,
+    endDateOfMonth
   };
 }
 
 export function generateStyles(sources) {
   if (!sources.length) return {};
   const generatedStyles = sources
-    .filter(source => Boolean(source))
+    .filter((source) => Boolean(source))
     .reduce((styles, styleSource) => {
-      Object.keys(styleSource).forEach(key => {
+      Object.keys(styleSource).forEach((key) => {
         styles[key] = classnames(styles[key], styleSource[key]);
       });
       return styles;
     }, {});
   return generatedStyles;
 }
+
+function eachQuarterOfYear(date) {
+  const year = date.getFullYear();
+  return {
+    1: { start: new Date(year, 0, 1), end: new Date(year, 3, 0) },
+    2: { start: new Date(year, 3, 1), end: new Date(year, 6, 0) },
+    3: { start: new Date(year, 6, 1), end: new Date(year, 9, 0) },
+    4: { start: new Date(year, 9, 1), end: new Date(year, 12, 0) }
+  };
+}
+
+function getQuarter(date) {
+  const quarters = eachQuarterOfYear(date);
+  return quarters[format(date, 'Q')];
+}
+
+function eachMonthOfYear(date) {
+  const year = date.getFullYear();
+  return {
+    1: { start: new Date(year, 0, 1), end: new Date(year, 1, 0) },
+    2: { start: new Date(year, 1, 1), end: new Date(year, 2, 0) },
+    3: { start: new Date(year, 2, 1), end: new Date(year, 3, 0) },
+    4: { start: new Date(year, 3, 1), end: new Date(year, 4, 0) },
+    5: { start: new Date(year, 4, 1), end: new Date(year, 5, 0) },
+    6: { start: new Date(year, 5, 1), end: new Date(year, 6, 0) },
+    7: { start: new Date(year, 6, 1), end: new Date(year, 7, 0) },
+    8: { start: new Date(year, 7, 1), end: new Date(year, 8, 0) },
+    9: { start: new Date(year, 8, 1), end: new Date(year, 9, 0) },
+    10: { start: new Date(year, 9, 1), end: new Date(year, 10, 0) },
+    11: { start: new Date(year, 10, 1), end: new Date(year, 11, 0) },
+    12: { start: new Date(year, 11, 1), end: new Date(year, 12, 0) }
+  };
+}
+
+function getMonthDates(date) {
+  const months = eachMonthOfYear(date);
+  return months[format(date, 'M')];
+}
+
+export { eachQuarterOfYear, getQuarter, getMonthDates, eachMonthOfYear };

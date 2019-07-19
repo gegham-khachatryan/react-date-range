@@ -1,10 +1,9 @@
 /* eslint-disable no-fallthrough */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
 
-class DayCell extends Component {
+class MonthCell extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -20,20 +19,21 @@ class DayCell extends Component {
   }
 
   handleKeyEvent(event) {
-    const { day } = this.props;
+    const { quarter } = this.props;
     switch (event.keyCode) {
       case 13: //space
       case 32: //enter
         if (event.type === 'keydown') {
-          this.props.onMouseDown(day);
+          this.props.onMouseDown(quarter.start);
         } else {
-          this.props.onMouseUp(day);
+          this.props.onMouseUp(quarter.start);
         }
         break;
     }
   }
   handleMouseEvent(event) {
-    const { day, disabled, onPreviewChange } = this.props;
+    const { quarter, disabled, onPreviewChange } = this.props;
+
     const stateChanges = {};
     if (disabled) {
       onPreviewChange();
@@ -42,8 +42,8 @@ class DayCell extends Component {
 
     switch (event.type) {
       case 'mouseenter':
-        this.props.onMouseEnter(day);
-        onPreviewChange(day);
+        this.props.onMouseEnter(quarter.start);
+        onPreviewChange(quarter.start);
         stateChanges.hover = true;
         break;
       case 'blur':
@@ -52,15 +52,15 @@ class DayCell extends Component {
         break;
       case 'mousedown':
         stateChanges.active = true;
-        this.props.onMouseDown(day);
+        this.props.onMouseDown(quarter.start);
         break;
       case 'mouseup':
         event.stopPropagation();
         stateChanges.active = false;
-        this.props.onMouseUp(day);
+        this.props.onMouseUp(quarter.start);
         break;
       case 'focus':
-        onPreviewChange(day);
+        onPreviewChange(quarter.start);
         break;
     }
     if (Object.keys(stateChanges).length) {
@@ -68,39 +68,23 @@ class DayCell extends Component {
     }
   }
   getClassNames() {
-    const {
-      isPassive,
-      isToday,
-      isWeekend,
-      isStartOfWeek,
-      isEndOfWeek,
-      isStartOfMonth,
-      isEndOfMonth,
-      disabled,
-      styles
-    } = this.props;
+    const { styles } = this.props;
 
-    return classnames(styles.day, {
-      [styles.dayPassive]: isPassive,
-      [styles.dayDisabled]: disabled,
-      [styles.dayToday]: isToday,
-      [styles.dayWeekend]: isWeekend,
-      [styles.dayStartOfWeek]: isStartOfWeek,
-      [styles.dayEndOfWeek]: isEndOfWeek,
-      [styles.dayStartOfMonth]: isStartOfMonth,
-      [styles.dayEndOfMonth]: isEndOfMonth,
+    return classnames(styles.monthCell, {
       [styles.dayHovered]: this.state.hover,
       [styles.dayActive]: this.state.active
     });
   }
   renderPreviewPlaceholder() {
-    const { preview, day, styles } = this.props;
+    const { preview, quarter, styles } = this.props;
     if (!preview) return null;
     const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
     const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
-    const isInRange = (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
-    const isStartEdge = !isInRange && isSameDay(day, startDate);
-    const isEndEdge = !isInRange && isSameDay(day, endDate);
+
+    const isInRange =
+      (!startDate || isAfter(quarter.start, startDate)) && (!endDate || isBefore(quarter.start, endDate));
+    const isStartEdge = !isInRange && isSameDay(quarter.start, startDate);
+    const isEndEdge = !isInRange && isSameDay(quarter.start, endDate);
     return (
       <span
         className={classnames({
@@ -113,9 +97,9 @@ class DayCell extends Component {
     );
   }
   renderSelectionPlaceholders() {
-    const { styles, ranges, day } = this.props;
+    const { styles, ranges, quarter } = this.props;
     if (this.props.displayMode === 'date') {
-      let isSelected = isSameDay(this.props.day, this.props.date);
+      let isSelected = isSameDay(this.props.quarter.start, this.props.date);
       return isSelected ? <span className={styles.selected} style={{ color: this.props.color }} /> : null;
     }
 
@@ -127,9 +111,11 @@ class DayCell extends Component {
       }
       startDate = startDate ? endOfDay(startDate) : null;
       endDate = endDate ? startOfDay(endDate) : null;
-      const isInRange = (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
-      const isStartEdge = !isInRange && isSameDay(day, startDate);
-      const isEndEdge = !isInRange && isSameDay(day, endDate);
+      const isInRange =
+        (!startDate || isAfter(quarter.start, startDate)) && (!endDate || isBefore(quarter.start, endDate));
+      const isStartEdge = !isInRange && isSameDay(quarter.start, startDate);
+      const isEndEdge = !isInRange && isSameDay(quarter.start, endDate);
+
       if (isInRange || isStartEdge || isEndEdge) {
         return [
           ...result,
@@ -158,6 +144,7 @@ class DayCell extends Component {
   }
   render() {
     const { styles } = this.props;
+
     return (
       <button
         type="button"
@@ -175,50 +162,13 @@ class DayCell extends Component {
         style={{ color: this.props.color }}>
         {this.renderSelectionPlaceholders()}
         {this.renderPreviewPlaceholder()}
+
         <span className={styles.dayNumber}>
-          <span>{format(this.props.day, 'D')}</span>
+          <span>{format(this.props.quarter.start, 'MMM')}</span>
         </span>
       </button>
     );
   }
 }
 
-DayCell.defaultProps = {};
-
-export const rangeShape = PropTypes.shape({
-  startDate: PropTypes.object,
-  endDate: PropTypes.object,
-  color: PropTypes.string,
-  key: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  disabled: PropTypes.bool,
-  showDateDisplay: PropTypes.bool
-});
-
-DayCell.propTypes = {
-  day: PropTypes.object.isRequired,
-  date: PropTypes.object,
-  ranges: PropTypes.arrayOf(rangeShape),
-  preview: PropTypes.shape({
-    startDate: PropTypes.object,
-    endDate: PropTypes.object
-  }),
-  onPreviewChange: PropTypes.func,
-  previewColor: PropTypes.string,
-  disabled: PropTypes.bool,
-  isPassive: PropTypes.bool,
-  isToday: PropTypes.bool,
-  isWeekend: PropTypes.bool,
-  isStartOfWeek: PropTypes.bool,
-  isEndOfWeek: PropTypes.bool,
-  isStartOfMonth: PropTypes.bool,
-  isEndOfMonth: PropTypes.bool,
-  color: PropTypes.string,
-  displayMode: PropTypes.oneOf(['dateRange', 'date']),
-  styles: PropTypes.object,
-  onMouseDown: PropTypes.func,
-  onMouseUp: PropTypes.func,
-  onMouseEnter: PropTypes.func
-};
-
-export default DayCell;
+export default MonthCell;

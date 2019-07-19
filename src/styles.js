@@ -12,6 +12,8 @@ export default {
   weekDay: 'rdrWeekDay',
   days: 'rdrDays',
   day: 'rdrDay',
+  quarter: 'rdrQuarter',
+  monthCell: 'rdrMonthCell',
   dayNumber: 'rdrDayNumber',
   dayPassive: 'rdrDayPassive',
   dayToday: 'rdrDayToday',
@@ -37,6 +39,9 @@ export default {
   monthPicker: 'rdrMonthPicker',
   yearPicker: 'rdrYearPicker',
   dateDisplayWrapper: 'rdrDateDisplayWrapper',
+  dateModeWrapper: 'rdrDateModeWrapper',
+  dateModeItem: 'rdrDateModeItem',
+  dateModeItemActive: 'rdrDateModeItemActive',
   definedRangesWrapper: 'rdrDefinedRangesWrapper',
   staticRanges: 'rdrStaticRanges',
   staticRange: 'rdrStaticRange',
@@ -50,4 +55,5 @@ export default {
   infiniteMonths: 'rdrInfiniteMonths',
   monthsVertical: 'rdrMonthsVertical',
   monthsHorizontal: 'rdrMonthsHorizontal',
+  yearPreivew: 'yearPreivew'
 };

@@ -5,9 +5,7 @@ import { format, addDays } from 'date-fns';
 import Section from './Section';
 
 function renderStaticRangeLabel(staticRange) {
-  return (
-    <CustomStaticRangeLabelContent text={'This is a custom label content: '}/>
-  );
+  return <CustomStaticRangeLabelContent text={'This is a custom label content: '} />;
 }
 
 class CustomStaticRangeLabelContent extends React.Component {
@@ -15,17 +13,14 @@ class CustomStaticRangeLabelContent extends React.Component {
     super(props);
 
     this.state = {
-      currentDateString: Date(),
+      currentDateString: Date()
     };
 
-    this.intervalId = setInterval(
-      () => {
-        this.setState({
-          currentDateString: Date(),
-        });
-      },
-      1000
-    );
+    this.intervalId = setInterval(() => {
+      this.setState({
+        currentDateString: Date()
+      });
+    }, 1000);
   }
 
   componentWillUnmount() {
@@ -85,12 +80,12 @@ const nameMapper = {
   ua: 'Ukrainian',
   vi: 'Vietnamese',
   zhCN: 'Chinese Simplified',
-  zhTW: 'Chinese Traditional',
+  zhTW: 'Chinese Traditional'
 };
 
-const localeOptions = Object.keys(rdrLocales).map(key => ({
+const localeOptions = Object.keys(rdrLocales).map((key) => ({
   value: key,
-  label: `${key} - ${nameMapper[key] || ''}`,
+  label: `${key} - ${nameMapper[key] || ''}`
 }));
 
 import 'normalize.css';
@@ -114,53 +109,53 @@ export default class Main extends Component {
         selection: {
           startDate: new Date(),
           endDate: null,
-          key: 'selection',
-        },
+          key: 'selection'
+        }
       },
       dateRangeWithDisabled: {
         selection: {
           startDate: addDays(new Date(), 4),
           endDate: null,
-          key: 'selection',
-        },
+          key: 'selection'
+        }
       },
       definedRange: {
         selection: {
           startDate: new Date(),
           endDate: new Date(),
-          key: 'selection',
-        },
+          key: 'selection'
+        }
       },
       dateRangePickerI: {
         selection: {
           startDate: new Date(),
           endDate: null,
-          key: 'selection',
+          key: 'selection'
         },
         compare: {
           startDate: new Date(),
           endDate: addDays(new Date(), 3),
-          key: 'compare',
-        },
+          key: 'compare'
+        }
       },
       multipleRanges: {
         selection1: {
           startDate: addDays(new Date(), 1),
           endDate: null,
-          key: 'selection1',
+          key: 'selection1'
         },
         selection2: {
           startDate: addDays(new Date(), 4),
           endDate: addDays(new Date(), 8),
-          key: 'selection2',
+          key: 'selection2'
         },
         selection3: {
           startDate: addDays(new Date(), 8),
           endDate: addDays(new Date(), 10),
           key: 'selection3',
           showDateDisplay: false,
-          autoFocus: false,
-        },
+          autoFocus: false
+        }
       },
       datePickerInternational: null,
       locale: 'ja',
@@ -168,16 +163,16 @@ export default class Main extends Component {
         selection: {
           startDate: new Date(),
           endDate: addDays(new Date(), 7),
-          key: 'selection',
-        },
-      },
+          key: 'selection'
+        }
+      }
     };
   }
 
   handleChange(which, payload) {
     console.log(which, payload);
     this.setState({
-      [which]: payload,
+      [which]: payload
     });
   }
 
@@ -186,8 +181,8 @@ export default class Main extends Component {
     this.setState({
       [which]: {
         ...this.state[which],
-        ...payload,
-      },
+        ...payload
+      }
     });
   }
 
@@ -198,21 +193,15 @@ export default class Main extends Component {
 
         <Section title="DateRangePicker - 2 month">
           <div>
-            <input
-              type="text"
-              readOnly
-              value={formatDateDisplay(this.state.dateRangePicker.selection.startDate)}
-            />
-            <input
-              type="text"
-              readOnly
-              value={formatDateDisplay(this.state.dateRangePicker.selection.endDate)}
-            />
+            <input type="text" readOnly value={formatDateDisplay(this.state.dateRangePicker.selection.startDate)} />
+            <input type="text" readOnly value={formatDateDisplay(this.state.dateRangePicker.selection.endDate)} />
           </div>
           <div>
             <DateRangePicker
               onChange={this.handleRangeChange.bind(this, 'dateRangePicker')}
-              showSelectionPreview={true}
+              showSelectionPreview={false}
+              showDateDisplay={false}
+              showDateMode={true}
               moveRangeOnFirstSelection={false}
               className={'PreviewArea'}
               months={2}
@@ -224,16 +213,8 @@ export default class Main extends Component {
 
         <Section title="DateRangePicker - Vertical Infinite">
           <div>
-            <input
-              type="text"
-              readOnly
-              value={formatDateDisplay(this.state.dateRangePickerI.selection.startDate)}
-            />
-            <input
-              type="text"
-              readOnly
-              value={formatDateDisplay(this.state.dateRangePickerI.selection.endDate)}
-            />
+            <input type="text" readOnly value={formatDateDisplay(this.state.dateRangePickerI.selection.startDate)} />
+            <input type="text" readOnly value={formatDateDisplay(this.state.dateRangePickerI.selection.endDate)} />
           </div>
           <div>
             <DateRangePicker
@@ -263,7 +244,7 @@ export default class Main extends Component {
               readOnly
               value={formatDateDisplay(this.state.multipleRanges.selection1.endDate, 'Continuous')}
             />
-            <div className={'newLine'}/>
+            <div className={'newLine'} />
 
             <label className={'label'}>Selection2 Start:</label>
             <input
@@ -277,7 +258,7 @@ export default class Main extends Component {
               readOnly
               value={formatDateDisplay(this.state.multipleRanges.selection2.endDate, 'Continuous')}
             />
-            <div className={'newLine'}/>
+            <div className={'newLine'} />
 
             <label className={'label'}>Selection3 Start:</label>
             <input
@@ -297,7 +278,7 @@ export default class Main extends Component {
             ranges={[
               this.state.multipleRanges.selection1,
               this.state.multipleRanges.selection2,
-              this.state.multipleRanges.selection3,
+              this.state.multipleRanges.selection3
             ]}
             className={'PreviewArea'}
           />
@@ -305,20 +286,14 @@ export default class Main extends Component {
 
         <Section title="DatePicker - Internationalization">
           <div>
-            <select
-              onChange={e => this.setState({ locale: e.target.value })}
-              value={this.state.locale}>
+            <select onChange={(e) => this.setState({ locale: e.target.value })} value={this.state.locale}>
               {localeOptions.map((option, i) => (
                 <option value={option.value} key={i}>
                   {option.label}
                 </option>
               ))}
             </select>
-            <input
-              type="text"
-              readOnly
-              value={formatDateDisplay(this.state.datePickerInternational)}
-            />
+            <input type="text" readOnly value={formatDateDisplay(this.state.datePickerInternational)} />
           </div>
           <Calendar
             locale={rdrLocales[this.state.locale]}
@@ -330,11 +305,7 @@ export default class Main extends Component {
 
         <Section title="RangePicker">
           <div>
-            <input
-              type="text"
-              readOnly
-              value={formatDateDisplay(this.state.dateRange.selection.startDate)}
-            />
+            <input type="text" readOnly value={formatDateDisplay(this.state.dateRange.selection.startDate)} />
             <input
               type="text"
               readOnly
@@ -351,11 +322,7 @@ export default class Main extends Component {
         </Section>
         <Section title="DefinedRange">
           <div>
-            <input
-              type="text"
-              readOnly
-              value={formatDateDisplay(this.state.definedRange.selection.startDate)}
-            />
+            <input type="text" readOnly value={formatDateDisplay(this.state.definedRange.selection.startDate)} />
             <input
               type="text"
               readOnly
@@ -366,23 +333,21 @@ export default class Main extends Component {
           <DefinedRange
             ranges={[this.state.definedRange.selection]}
             renderStaticRangeLabel={renderStaticRangeLabel}
-            staticRanges={[{
-              label: "Hoy",
-              hasCustomRendering: true,
-              range: () => ({
-                startDate: new Date(),
-                endDate: new Date(),
-              }),
-              isSelected() {
-                return (
-                  true
-                );
-              },
-            }]}
+            staticRanges={[
+              {
+                label: 'Hoy',
+                hasCustomRendering: true,
+                range: () => ({
+                  startDate: new Date(),
+                  endDate: new Date()
+                }),
+                isSelected() {
+                  return true;
+                }
+              }
+            ]}
             onChange={this.handleRangeChange.bind(this, 'definedRange')}
-            className={'centered'}
-          >
-          </DefinedRange>
+            className={'centered'}></DefinedRange>
         </Section>
         <Section title="RangePicker with disabled dates">
           <div>
@@ -394,10 +359,7 @@ export default class Main extends Component {
             <input
               type="text"
               readOnly
-              value={formatDateDisplay(
-                this.state.dateRangeWithDisabled.selection.endDate,
-                'Continuous'
-              )}
+              value={formatDateDisplay(this.state.dateRangeWithDisabled.selection.endDate, 'Continuous')}
             />
           </div>
 
@@ -413,18 +375,18 @@ export default class Main extends Component {
           <DefinedRange
             ranges={[this.state.definedRange.selection]}
             renderStaticRangeLabel={renderStaticRangeLabel}
-            staticRanges={[{
-              hasCustomRendering: true,
-              range: () => ({
-                startDate: new Date(),
-                endDate: new Date(),
-              }),
-              isSelected() {
-                return (
-                  true
-                );
-              },
-            }]}
+            staticRanges={[
+              {
+                hasCustomRendering: true,
+                range: () => ({
+                  startDate: new Date(),
+                  endDate: new Date()
+                }),
+                isSelected() {
+                  return true;
+                }
+              }
+            ]}
             onChange={this.handleRangeChange.bind(this, 'definedRange')}
             className={'centered'}
           />
