@@ -68,10 +68,7 @@ var DateRangePicker = function (_Component) {
         'div',
         { className: (0, _classnames2.default)(this.styles.dateRangePickerWrapper, this.props.className) },
         _react2.default.createElement(_DefinedRange2.default, _extends({
-          focusedRange: focusedRange,
-          onPreviewChange: function onPreviewChange(value) {
-            return _this2.dateRange.updatePreview(value);
-          }
+          focusedRange: focusedRange
         }, this.props, {
           range: this.props.ranges[focusedRange[0]],
           className: undefined
