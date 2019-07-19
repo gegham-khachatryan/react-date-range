@@ -76,7 +76,6 @@ class DateRange extends Component {
       nextFocusRange: nextFocusRange
     };
   }
-
   setSelection(value, isSingleValue) {
     const { onChange, ranges, onRangeFocusChange } = this.props;
     const focusedRange = this.props.focusedRange || this.state.focusedRange;

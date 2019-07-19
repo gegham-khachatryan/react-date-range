@@ -338,10 +338,11 @@ class Calendar extends PureComponent {
     const newRange = {
       startDate: this.state.drag.range.startDate,
       endDate: dateMode === 'quarter' ? getQuarter(date).end : dateMode === 'month' ? getMonthDates(date).end : date
+      // endDate: date
     };
 
     if (displayMode !== 'dateRange' || isSameDay(newRange.startDate, newRange.endDate)) {
-      this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(date));
+      this.setState({ drag: { status: false, range: {} } }, () => onChange && onChange(newRange.endDate));
     } else {
       this.setState({ drag: { status: false, range: {} } }, () => {
         updateRange && updateRange(newRange);
