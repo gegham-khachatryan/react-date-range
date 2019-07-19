@@ -566,11 +566,12 @@ var Calendar = function (_PureComponent) {
       var newRange = {
         startDate: this.state.drag.range.startDate,
         endDate: dateMode === 'quarter' ? (0, _utils.getQuarter)(date).end : dateMode === 'month' ? (0, _utils.getMonthDates)(date).end : date
+        // endDate: date
       };
 
       if (displayMode !== 'dateRange' || (0, _isSameDay2.default)(newRange.startDate, newRange.endDate)) {
         this.setState({ drag: { status: false, range: {} } }, function () {
-          return onChange && onChange(date);
+          return onChange && onChange(newRange.endDate);
         });
       } else {
         this.setState({ drag: { status: false, range: {} } }, function () {
