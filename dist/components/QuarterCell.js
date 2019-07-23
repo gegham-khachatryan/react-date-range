@@ -16,6 +16,10 @@ var _classnames4 = require('classnames');
 
 var _classnames5 = _interopRequireDefault(_classnames4);
 
+var _getQuarter = require('date-fns/getQuarter');
+
+var _getQuarter2 = _interopRequireDefault(_getQuarter);
+
 var _endOfDay = require('date-fns/endOfDay');
 
 var _endOfDay2 = _interopRequireDefault(_endOfDay);
@@ -31,10 +35,6 @@ var _isAfter2 = _interopRequireDefault(_isAfter);
 var _isSameDay = require('date-fns/isSameDay');
 
 var _isSameDay2 = _interopRequireDefault(_isSameDay);
-
-var _format = require('date-fns/format');
-
-var _format2 = _interopRequireDefault(_format);
 
 var _startOfDay = require('date-fns/startOfDay');
 
@@ -244,7 +244,7 @@ var QuarterCell = function (_Component) {
             'span',
             null,
             'Q',
-            (0, _format2.default)(this.props.quarter.start, 'Q')
+            (0, _getQuarter2.default)(this.props.quarter.start)
           )
         )
       );

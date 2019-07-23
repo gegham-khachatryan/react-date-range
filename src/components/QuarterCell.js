@@ -1,7 +1,7 @@
 /* eslint-disable no-fallthrough */
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import { startOfDay, format, isSameDay, isAfter, isBefore, endOfDay } from 'date-fns';
+import { startOfDay, isSameDay, isAfter, isBefore, endOfDay, getQuarter } from 'date-fns';
 
 class QuarterCell extends Component {
   constructor(props, context) {
@@ -164,7 +164,7 @@ class QuarterCell extends Component {
         {this.renderPreviewPlaceholder()}
 
         <span className={styles.dayNumber}>
-          <span>Q{format(this.props.quarter.start, 'Q')}</span>
+          <span>Q{getQuarter(this.props.quarter.start)}</span>
         </span>
       </button>
     );
