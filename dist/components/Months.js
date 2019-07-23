@@ -18,6 +18,10 @@ var _MonthCell = require('./MonthCell.js');
 
 var _MonthCell2 = _interopRequireDefault(_MonthCell);
 
+var _startOfMonth = require('date-fns/startOfMonth');
+
+var _startOfMonth2 = _interopRequireDefault(_startOfMonth);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49,7 +53,7 @@ var Months = function (_PureComponent) {
 
       var ranges = this.props.ranges.map(function (i) {
         return _extends({}, i, {
-          endDate: i.endDate ? (0, _utils.getMonthDates)(i.endDate).start : i.endDate
+          endDate: i.endDate ? (0, _startOfMonth2.default)(i.endDate) : i.endDate
         });
       });
       if (displayMode === 'dateRange' && drag.status) {

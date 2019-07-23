@@ -13,6 +13,26 @@ var _differenceInCalendarDays = require('date-fns/differenceInCalendarDays');
 
 var _differenceInCalendarDays2 = _interopRequireDefault(_differenceInCalendarDays);
 
+var _subYears = require('date-fns/subYears');
+
+var _subYears2 = _interopRequireDefault(_subYears);
+
+var _endOfYear = require('date-fns/endOfYear');
+
+var _endOfYear2 = _interopRequireDefault(_endOfYear);
+
+var _startOfYear = require('date-fns/startOfYear');
+
+var _startOfYear2 = _interopRequireDefault(_startOfYear);
+
+var _endOfQuarter = require('date-fns/endOfQuarter');
+
+var _endOfQuarter2 = _interopRequireDefault(_endOfQuarter);
+
+var _startOfQuarter = require('date-fns/startOfQuarter');
+
+var _startOfQuarter2 = _interopRequireDefault(_startOfQuarter);
+
 var _isSameDay = require('date-fns/isSameDay');
 
 var _isSameDay2 = _interopRequireDefault(_isSameDay);
@@ -126,6 +146,30 @@ var defaultStaticRanges = exports.defaultStaticRanges = createStaticRanges([{
     return {
       startDate: defineds.startOfLastMonth,
       endDate: defineds.endOfLastMonth
+    };
+  }
+}, {
+  label: 'This Quarter',
+  range: function range() {
+    return {
+      startDate: (0, _startOfQuarter2.default)(new Date()),
+      endDate: (0, _endOfQuarter2.default)(new Date())
+    };
+  }
+}, {
+  label: 'This Year',
+  range: function range() {
+    return {
+      startDate: (0, _startOfYear2.default)(new Date()),
+      endDate: (0, _endOfYear2.default)(new Date())
+    };
+  }
+}, {
+  label: 'Year to date',
+  range: function range() {
+    return {
+      startDate: (0, _subYears2.default)(new Date(), 1),
+      endDate: new Date()
     };
   }
 }]);

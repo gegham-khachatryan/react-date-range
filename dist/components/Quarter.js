@@ -18,6 +18,10 @@ var _QuarterCell = require('./QuarterCell.js');
 
 var _QuarterCell2 = _interopRequireDefault(_QuarterCell);
 
+var _startOfQuarter = require('date-fns/startOfQuarter');
+
+var _startOfQuarter2 = _interopRequireDefault(_startOfQuarter);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -49,7 +53,7 @@ var Quarter = function (_PureComponent) {
 
 
       var ranges = this.props.ranges.map(function (i) {
-        return _extends({}, i, { endDate: i.endDate ? (0, _utils.getQuarter)(i.endDate).start : i.endDate });
+        return _extends({}, i, { endDate: i.endDate ? (0, _startOfQuarter2.default)(i.endDate) : i.endDate });
       });
       if (displayMode === 'dateRange' && drag.status) {
         var _drag$range = drag.range,

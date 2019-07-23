@@ -1,13 +1,14 @@
 /* eslint-disable no-fallthrough */
 import React, { PureComponent } from 'react';
-import { eachQuarterOfYear, getQuarter } from '../utils';
+import { eachQuarterOfYear } from '../utils';
 import QuarterCell from './QuarterCell.js';
+import { startOfQuarter } from 'date-fns';
 
 class Quarter extends PureComponent {
   render() {
     const { displayMode, focusedRange, drag, styles } = this.props;
 
-    let ranges = this.props.ranges.map((i) => ({ ...i, endDate: i.endDate ? getQuarter(i.endDate).start : i.endDate }));
+    let ranges = this.props.ranges.map((i) => ({ ...i, endDate: i.endDate ? startOfQuarter(i.endDate) : i.endDate }));
     if (displayMode === 'dateRange' && drag.status) {
       let { startDate, endDate } = drag.range;
       ranges = ranges.map((range, i) => {

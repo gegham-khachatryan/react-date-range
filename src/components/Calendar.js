@@ -21,9 +21,10 @@ import {
   startOfMonth,
   differenceInDays,
   eachDayOfInterval,
-  differenceInCalendarMonths
+  differenceInCalendarMonths,
+  endOfQuarter
 } from 'date-fns';
-import { calcFocusDate, generateStyles, getMonthDisplayRange, getQuarter, getMonthDates } from '../utils';
+import { calcFocusDate, generateStyles, getMonthDisplayRange } from '../utils';
 import coreStyles from '../styles';
 import Quarter from './Quarter.js';
 import defaultLocale from 'date-fns/locale/en-US';
@@ -337,7 +338,7 @@ class Calendar extends PureComponent {
 
     const newRange = {
       startDate: this.state.drag.range.startDate,
-      endDate: dateMode === 'quarter' ? getQuarter(date).end : dateMode === 'month' ? getMonthDates(date).end : date
+      endDate: dateMode === 'quarter' ? endOfQuarter(date) : dateMode === 'month' ? endOfMonth(date) : date
       // endDate: date
     };
 

@@ -81,11 +81,6 @@ function eachQuarterOfYear(date) {
   };
 }
 
-function getQuarter(date) {
-  const quarters = eachQuarterOfYear(date);
-  return quarters[format(date, 'Q')];
-}
-
 function eachMonthOfYear(date) {
   const year = date.getFullYear();
   return {
@@ -104,9 +99,4 @@ function eachMonthOfYear(date) {
   };
 }
 
-function getMonthDates(date) {
-  const months = eachMonthOfYear(date);
-  return months[format(date, 'M')];
-}
-
-export { eachQuarterOfYear, getQuarter, getMonthDates, eachMonthOfYear };
+export { eachQuarterOfYear, eachMonthOfYear };

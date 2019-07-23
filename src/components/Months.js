@@ -1,14 +1,15 @@
 /* eslint-disable no-fallthrough */
 import React, { PureComponent } from 'react';
-import { eachMonthOfYear, getMonthDates } from '../utils';
+import { eachMonthOfYear } from '../utils';
 import MonthCell from './MonthCell.js';
+import { startOfMonth } from 'date-fns';
 
 class Months extends PureComponent {
   render() {
     const { displayMode, focusedRange, drag, styles } = this.props;
     let ranges = this.props.ranges.map((i) => ({
       ...i,
-      endDate: i.endDate ? getMonthDates(i.endDate).start : i.endDate
+      endDate: i.endDate ? startOfMonth(i.endDate) : i.endDate
     }));
     if (displayMode === 'dateRange' && drag.status) {
       let { startDate, endDate } = drag.range;

@@ -30,6 +30,10 @@ var _Month = require('./Month.js');
 
 var _Month2 = _interopRequireDefault(_Month);
 
+var _endOfQuarter = require('date-fns/endOfQuarter');
+
+var _endOfQuarter2 = _interopRequireDefault(_endOfQuarter);
+
 var _differenceInCalendarMonths = require('date-fns/differenceInCalendarMonths');
 
 var _differenceInCalendarMonths2 = _interopRequireDefault(_differenceInCalendarMonths);
@@ -565,7 +569,7 @@ var Calendar = function (_PureComponent) {
 
       var newRange = {
         startDate: this.state.drag.range.startDate,
-        endDate: dateMode === 'quarter' ? (0, _utils.getQuarter)(date).end : dateMode === 'month' ? (0, _utils.getMonthDates)(date).end : date
+        endDate: dateMode === 'quarter' ? (0, _endOfQuarter2.default)(date) : dateMode === 'month' ? (0, _endOfMonth2.default)(date) : date
         // endDate: date
       };
 

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.eachMonthOfYear = exports.getMonthDates = exports.getQuarter = exports.eachQuarterOfYear = undefined;
+exports.eachMonthOfYear = exports.eachQuarterOfYear = undefined;
 exports.calcFocusDate = calcFocusDate;
 exports.findNextRangeIndex = findNextRangeIndex;
 exports.getMonthDisplayRange = getMonthDisplayRange;
@@ -133,11 +133,6 @@ function eachQuarterOfYear(date) {
   };
 }
 
-function getQuarter(date) {
-  var quarters = eachQuarterOfYear(date);
-  return quarters[(0, _format2.default)(date, 'Q')];
-}
-
 function eachMonthOfYear(date) {
   var year = date.getFullYear();
   return {
@@ -156,12 +151,5 @@ function eachMonthOfYear(date) {
   };
 }
 
-function getMonthDates(date) {
-  var months = eachMonthOfYear(date);
-  return months[(0, _format2.default)(date, 'M')];
-}
-
 exports.eachQuarterOfYear = eachQuarterOfYear;
-exports.getQuarter = getQuarter;
-exports.getMonthDates = getMonthDates;
 exports.eachMonthOfYear = eachMonthOfYear;

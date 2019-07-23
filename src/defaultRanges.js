@@ -8,6 +8,11 @@ import {
   startOfWeek,
   endOfWeek,
   isSameDay,
+  startOfQuarter,
+  endOfQuarter,
+  startOfYear,
+  endOfYear,
+  subYears,
   differenceInCalendarDays
 } from 'date-fns';
 
@@ -80,6 +85,27 @@ export const defaultStaticRanges = createStaticRanges([
     range: () => ({
       startDate: defineds.startOfLastMonth,
       endDate: defineds.endOfLastMonth
+    })
+  },
+  {
+    label: 'This Quarter',
+    range: () => ({
+      startDate: startOfQuarter(new Date()),
+      endDate: endOfQuarter(new Date())
+    })
+  },
+  {
+    label: 'This Year',
+    range: () => ({
+      startDate: startOfYear(new Date()),
+      endDate: endOfYear(new Date())
+    })
+  },
+  {
+    label: 'Year to date',
+    range: () => ({
+      startDate: subYears(new Date(), 1),
+      endDate: new Date()
     })
   }
 ]);
